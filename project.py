@@ -1,5 +1,5 @@
 from os import name,system
-file_path=r"C:\Users\your_folder\your_file"
+file_path=r"C:\Users\your_name\your_folder\your_file"
 def ccls():
     system("cls" if name=="nt" else "clear")
 def oku():
@@ -64,6 +64,53 @@ def yaz():
                     file.write(text+"\n")
             except Exception as e:
                 print(f"Dosya baştan yazılırken beklenmeyen bir hata oluştu. Hata mesajı: {e}")
+def sil():
+    try:    
+        delete_mode=int(input("1-Satır Sil    2-Tamamen Sil    3-İptal\nSeçiminiz: "))
+        if delete_mode not in [1,2,3]:
+            raise ValueError
+    except ValueError:
+        print("Sadece 3 seçenekten birini seçebilirsiniz.")
+    except Exception as e:
+        print(f"Beklenmeyen bir hata oluştu. Hata mesajı: {e}")
+    else:
+        if delete_mode==1:
+            try:
+                with open(file_path,"r",encoding="utf-8") as file:
+                    lines=file.readlines()
+                if not lines:
+                    print("Dosya boş olduğundan dolayı bir satırı silemezsiniz.")
+                    input("Devam etmek için 'enter'a basınız.")
+                    return
+                print("Silmek istediğiniz satırı seçiniz.\n")
+                for i,t in enumerate(lines):
+                    print(f"index: {i} | Mesaj: {t.strip()}")
+                line_to_delete = int(input("Silinecek satırın index numarasını girin: "))
+                if 0 <= line_to_delete < len(lines):
+                    deleted_line_content = lines.pop(line_to_delete).strip()
+                    with open(file_path, "w", encoding="utf-8") as file:
+                        file.writelines(lines)
+                    print(f"'{deleted_line_content}' satırı başarıyla silindi.")
+                else:
+                    print("Geçersiz index numarası.")
+            except FileNotFoundError:
+                print("Dosya bulunamadı.")
+            except ValueError:
+                print("Geçersiz index girişi. Lütfen bir sayı girin.")
+            except Exception as e:
+                print(f"Beklenmeyen bir hata oluştu. Hata mesajı: {e}")
+        elif delete_mode==2:
+            try:
+                with open(file_path,"w",encoding="utf-8") as file:
+                    file.write()
+            except FileNotFoundError:
+                print("Gerekli dosya bulunamadı.")
+            except Exception as e:
+                print(f"Beklenmeyen bir hata oluştu. Hata mesajı: {e}")
+        elif delete_mode==3:
+            print("Silme işlemi iptal edildi.")
+            input("\nDevam etmek için 'Enter'a basınız.")
+
 
 
                     
