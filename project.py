@@ -1,5 +1,5 @@
 from os import name,system
-file_path=r"C:\Users\your_name\your_folder\your_file"
+file_path=r"C:\Users\yourUsername\yourFolder\yourFile.txt" #burayı kendinize uygun olacak şekilde güncellemeniz lazım.
 def ccls():
     system("cls" if name=="nt" else "clear")
 def oku():
@@ -64,6 +64,7 @@ def yaz():
                     file.write(text+"\n")
             except Exception as e:
                 print(f"Dosya baştan yazılırken beklenmeyen bir hata oluştu. Hata mesajı: {e}")
+
 def sil():
     try:    
         delete_mode=int(input("1-Satır Sil    2-Tamamen Sil    3-İptal\nSeçiminiz: "))
@@ -102,7 +103,7 @@ def sil():
         elif delete_mode==2:
             try:
                 with open(file_path,"w",encoding="utf-8") as file:
-                    file.write()
+                    file.truncate(0)
             except FileNotFoundError:
                 print("Gerekli dosya bulunamadı.")
             except Exception as e:
@@ -111,15 +112,13 @@ def sil():
             print("Silme işlemi iptal edildi.")
             input("\nDevam etmek için 'Enter'a basınız.")
 
-
-
                     
 
        
 while True:
     try:
-        choice=int(input("1-OKU\n2-YAZ\n3-TEMİZLE\n4-ÇIK\nSeçiminiz: "))
-        if choice<1 or choice>4:
+        choice=int(input("1-OKU\n2-YAZ\n3-SİL\n4-TEMİZLE\n5-ÇIK\nSeçiminiz: "))
+        if choice not in [1,2,3,4,5]:
             raise ValueError("Seçenek 0'dan az 5'den çok olamaz.")
     except ValueError as e:
         print(f"Sadece sayısal değer girin! Hata mesajı: {e}")
@@ -132,8 +131,10 @@ while True:
         elif choice==2:
             yaz()
         elif choice==3:
-            ccls()
+            sil()
         elif choice==4:
+            ccls()
+        elif choice==5:
             if input("İyi günler dilerim. Enter'a bastığınızda kod durdurulacak. (İptal yazarsanız kod kapatılmaycak.)\n").strip().lower()=="iptal":
                 continue
             ccls()
